@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Assessoria Imobiliária na Itália — Fale com o Alexandre</title>
+<meta name="description" content="Responda algumas perguntas rápidas e receba um atendimento personalizado sobre sua imigração e assessoria imobiliária na Itália." />
+<style>
+  /* =========================================================
+     ESTILO
+     ========================================================= */
+  :root{
+    --verde:#1a8f5a;
+    --verde-esc:#0f6d43;
+    --vermelho:#c9412f;
+    --tinta:#1f2733;
+    --cinza:#6b7684;
+    --linha:#e7ebef;
+    --fundo:#f4f6f8;
+    --card:#ffffff;
+    --sombra:0 10px 30px rgba(20,35,50,.10);
+    --raio:18px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:
+      radial-gradient(1200px 500px at 50% -10%, #e9f5ee 0%, rgba(233,245,238,0) 60%),
+      var(--fundo);
+    color:var(--tinta);
+    -webkit-font-smoothing:antialiased;
+    display:flex;flex-direction:column;min-height:100dvh;
+  }
+  .wrap{
+    width:100%;max-width:520px;margin:0 auto;
+    padding:22px 18px calc(22px + env(safe-area-inset-bottom));
+    flex:1;display:flex;flex-direction:column;
+  }
+
+  /* Cabeçalho */
+  header{text-align:center;margin-bottom:14px}
+  .bandeira{
+    display:inline-flex;height:6px;width:64px;border-radius:6px;overflow:hidden;margin-bottom:14px;
+    box-shadow:0 2px 8px rgba(0,0,0,.12);
+  }
+  .bandeira i{flex:1}
+  .bandeira i:nth-child(1){background:#1a8f5a}
+  .bandeira i:nth-child(2){background:#fff}
+  .bandeira i:nth-child(3){background:#c9412f}
+  header h1{font-size:20px;line-height:1.3;font-weight:800;letter-spacing:-.2px}
+  header p{color:var(--cinza);font-size:14px;margin-top:6px}
+
+  /* Barra de progresso */
+  .progresso{height:8px;background:#e9edf1;border-radius:99px;overflow:hidden;margin:18px 0 20px}
+  .progresso b{display:block;height:100%;width:0;border-radius:99px;
+    background:linear-gradient(90deg,var(--verde),var(--verde-esc));
+    transition:width .35s cubic-bezier(.4,0,.2,1)}
+
+  /* Card / etapas */
+  .card{
+    background:var(--card);border:1px solid var(--linha);border-radius:var(--raio);
+    box-shadow:var(--sombra);padding:22px 20px;flex:1;display:flex;flex-direction:column;
+  }
+  .step{display:none;animation:fade .35s ease both}
+  .step.ativo{display:flex;flex-direction:column;flex:1}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  .passo-num{font-size:12px;font-weight:700;color:var(--verde);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
+  .pergunta{font-size:19px;font-weight:800;line-height:1.35;letter-spacing:-.2px}
+  .ajuda{color:var(--cinza);font-size:13.5px;margin-top:7px;line-height:1.5}
+
+  .campos{margin-top:20px;display:flex;flex-direction:column;gap:12px;flex:1}
+
+  /* Opções (botões de escolha) */
+  .opcao{
+    display:flex;align-items:center;gap:14px;width:100%;text-align:left;cursor:pointer;
+    border:1.5px solid var(--linha);background:#fff;border-radius:14px;padding:15px 16px;
+    font-size:15.5px;font-weight:600;color:var(--tinta);transition:.15s;
+  }
+  .opcao:hover{border-color:#cfe6d9}
+  .opcao .ic{font-size:20px;line-height:1}
+  .opcao[aria-checked="true"]{
+    border-color:var(--verde);background:#f1faf4;
+    box-shadow:0 0 0 3px rgba(26,143,90,.12);
+  }
+  .opcao .marca{margin-left:auto;width:22px;height:22px;border-radius:50%;border:2px solid #cdd5dd;flex:none;position:relative}
+  .opcao[aria-checked="true"] .marca{border-color:var(--verde);background:var(--verde)}
+  .opcao[aria-checked="true"] .marca::after{content:"";position:absolute;left:6px;top:2.5px;width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+
+  /* Campo de texto */
+  input[type=text]{
+    width:100%;border:1.5px solid var(--linha);border-radius:14px;padding:15px 16px;
+    font-size:16px;font-family:inherit;color:var(--tinta);background:#fff;transition:.15s;
+  }
+  input[type=text]:focus{outline:none;border-color:var(--verde);box-shadow:0 0 0 3px rgba(26,143,90,.12)}
+  .sugestoes{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+  .chip{border:1px solid var(--linha);background:#fff;border-radius:99px;padding:8px 13px;font-size:13px;font-weight:600;color:var(--cinza);cursor:pointer;transition:.15s}
+  .chip:hover{border-color:var(--verde);color:var(--verde)}
+
+  .erro{color:var(--vermelho);font-size:13px;font-weight:600;margin-top:2px;display:none}
+  .erro.ver{display:block}
+
+  /* Navegação */
+  .nav{display:flex;gap:10px;margin-top:20px;align-items:center}
+  .btn{
+    border:none;border-radius:14px;padding:15px 20px;font-size:15.5px;font-weight:700;font-family:inherit;
+    cursor:pointer;transition:.15s;display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  }
+  .btn-primario{background:var(--verde);color:#fff;flex:1;box-shadow:0 6px 16px rgba(26,143,90,.28)}
+  .btn-primario:hover{background:var(--verde-esc)}
+  .btn-primario:active{transform:translateY(1px)}
+  .btn-voltar{background:transparent;color:var(--cinza);padding:15px 12px;flex:none}
+  .btn-voltar:hover{color:var(--tinta)}
+  .btn-voltar[hidden]{display:none}
+
+  /* Tela final */
+  .final{text-align:center}
+  .ok{width:64px;height:64px;border-radius:50%;background:#eafaf1;display:flex;align-items:center;justify-content:center;margin:4px auto 12px;font-size:30px}
+  .preview{
+    text-align:left;background:#f7f9fb;border:1px dashed #cfd8e0;border-radius:14px;
+    padding:16px;margin:16px 0;font-size:14px;line-height:1.6;white-space:pre-wrap;color:#33404f;
+    max-height:240px;overflow:auto;
+  }
+  .btn-wpp{background:#25D366;color:#fff;width:100%;font-size:17px;padding:17px;box-shadow:0 8px 20px rgba(37,211,102,.35)}
+  .btn-wpp:hover{background:#1fb356}
+  .refazer{margin-top:14px;background:transparent;color:var(--cinza);font-size:13.5px;font-weight:600;border:none;cursor:pointer;text-decoration:underline;padding:8px}
+
+  .aviso-config{display:none;background:#fff6e5;border:1px solid #f0d493;color:#8a5b00;border-radius:12px;padding:12px 14px;font-size:13px;line-height:1.5;margin-top:14px;text-align:left}
+  .aviso-config.ver{display:block}
+
+  footer{text-align:center;color:#9aa5b1;font-size:12px;margin-top:16px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="bandeira" aria-hidden="true"><i></i><i></i><i></i></span>
+    <h1>Assessoria Imobiliária na Itália 🇮🇹</h1>
+    <p>Responda 4 perguntinhas e eu te levo direto pro WhatsApp com tudo pronto.</p>
+  </header>
+
+  <div class="progresso" aria-hidden="true"><b id="barra"></b></div>
+
+  <div class="card">
+    <form id="quiz" novalidate>
+      <!-- As etapas são geradas via JavaScript a partir do bloco CONFIG -->
+    </form>
+
+    <!-- TELA FINAL -->
+    <div class="step final" id="tela-final">
+      <div class="ok">✅</div>
+      <div class="pergunta">Prontinho! Sua mensagem está montada 👇</div>
+      <p class="ajuda">É só tocar no botão abaixo — o WhatsApp abre com o texto já escrito. Você só aperta enviar.</p>
+      <div class="preview" id="preview"></div>
+      <a class="btn btn-wpp" id="botao-wpp" href="#" rel="noopener">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.06 24l1.68-6.16A11.9 11.9 0 0 1 .13 11.9C.13 5.33 5.47 0 12.04 0a11.8 11.8 0 0 1 8.4 3.49 11.8 11.8 0 0 1 3.48 8.42c0 6.57-5.34 11.9-11.9 11.9a11.9 11.9 0 0 1-5.7-1.45L.06 24zM6.6 20.13l.36.22a9.9 9.9 0 0 0 5.05 1.38 9.88 9.88 0 0 0 9.88-9.87 9.82 9.82 0 0 0-2.9-6.99 9.82 9.82 0 0 0-6.98-2.9 9.88 9.88 0 0 0-9.88 9.87c0 1.9.54 3.75 1.56 5.34l.24.38-1 3.65 3.7-.98zM17.5 14.3c-.09-.15-.33-.24-.69-.42-.36-.18-2.13-1.05-2.46-1.17-.33-.12-.57-.18-.81.18-.24.36-.93 1.17-1.14 1.41-.21.24-.42.27-.78.09-.36-.18-1.52-.56-2.9-1.79-1.07-.95-1.79-2.13-2-2.49-.21-.36-.02-.55.16-.73.16-.16.36-.42.54-.63.18-.21.24-.36.36-.6.12-.24.06-.45-.03-.63-.09-.18-.81-1.95-1.11-2.67-.29-.7-.59-.6-.81-.62l-.69-.01c-.24 0-.63.09-.96.45-.33.36-1.26 1.23-1.26 3 0 1.77 1.29 3.48 1.47 3.72.18.24 2.54 3.88 6.15 5.44.86.37 1.53.59 2.05.76.86.27 1.65.23 2.27.14.69-.1 2.13-.87 2.43-1.71.3-.84.3-1.56.21-1.71z"/></svg>
+        Enviar no WhatsApp
+      </a>
+      <div class="aviso-config" id="aviso-config">
+        ⚠️ <b>Falta configurar o número do WhatsApp.</b> Abra o arquivo <code>index.html</code>,
+        procure por <code>numeroWhatsApp</code> no topo do script e coloque o número do Alexandre
+        no formato internacional (só dígitos, com código do país). Ex.: <code>5531999998888</code>.
+      </div>
+      <button type="button" class="refazer" id="refazer">↺ Refazer respostas</button>
+    </div>
+  </div>
+
+  <footer>Atendimento personalizado • suas respostas ficam só no seu aparelho</footer>
+</div>
+
+<script>
+/* =============================================================
+   CONFIGURAÇÃO — edite só esta parte
+   ============================================================= */
+const CONFIG = {
+
+  // 👉 NÚMERO DO WHATSAPP DO ALEXANDRE (formato internacional, só dígitos).
+  //    Brasil:  55 + DDD + número      -> ex.: "5531999998888"
+  //    Itália:  39 + número            -> ex.: "393401234567"
+  //    DEIXE VAZIO ("") enquanto não tiver o número — a página avisa.
+  numeroWhatsApp: "",
+
+  // Nome de quem recebe (aparece no "Ciao, ___!")
+  mentor: "Alexandre",
+
+  // Perguntas do quiz. Tipo "escolha" (botões) ou "texto" (campo aberto).
+  perguntas: [
+    {
+      id: "nome",
+      tipo: "texto",
+      titulo: "Como você se chama?",
+      ajuda: "Assim o Alexandre já te chama pelo nome.",
+      placeholder: "Seu primeiro nome",
+      obrigatorio: true
+    },
+    {
+      id: "objetivo",
+      tipo: "escolha",
+      titulo: "Qual é o seu objetivo com o imóvel na Itália?",
+      opcoes: [
+        { valor: "Alugar",            ic: "🔑" },
+        { valor: "Comprar",           ic: "🏠" },
+        { valor: "Gestão de Imóvel",  ic: "📋" }
+      ],
+      obrigatorio: true
+    },
+    {
+      id: "cidadania",
+      tipo: "escolha",
+      titulo: "Você já tem cidadania ou visto italiano/europeu?",
+      opcoes: [
+        { valor: "Sim", ic: "✅" },
+        { valor: "Não", ic: "⏳" }
+      ],
+      obrigatorio: true
+    },
+    {
+      id: "regiao",
+      tipo: "texto",
+      titulo: "Qual região da Itália te interessa?",
+      ajuda: "Pode ser uma cidade, região ou 'ainda não sei'.",
+      placeholder: "Ex.: Toscana, Roma, Milão...",
+      sugestoes: ["Toscana", "Roma", "Milão", "Vêneto", "Ainda não sei"],
+      obrigatorio: true
+    }
+  ],
+
+  // Monta a mensagem final a partir das respostas (r.id -> resposta).
+  // Use \n para quebrar linha. O que estiver aqui vira o texto do WhatsApp.
+  montarMensagem: (r) => (
+`Ciao, ${CONFIG.mentor}! Vim pelo link da bio e gostaria de informações sobre a Assessoria Imobiliária na Itália.
+
+Meu nome é: ${r.nome}
+Meu objetivo é: ${r.objetivo}
+Já tenho cidadania/visto: ${r.cidadania}
+Região de interesse: ${r.regiao}
+
+Pode me explicar como funciona o seu acompanhamento?`
+  )
+};
+
+/* =============================================================
+   MOTOR DO QUIZ — não precisa mexer daqui pra baixo
+   ============================================================= */
+const form = document.getElementById('quiz');
+const barra = document.getElementById('barra');
+const telaFinal = document.getElementById('tela-final');
+const respostas = {};
+let atual = 0;
+
+// --- cria as etapas dinamicamente ---
+CONFIG.perguntas.forEach((p, i) => {
+  const step = document.createElement('div');
+  step.className = 'step';
+  step.dataset.index = i;
+
+  let campos = '';
+  if (p.tipo === 'escolha') {
+    campos = `<div class="campos" role="radiogroup" aria-label="${p.titulo}">` +
+      p.opcoes.map(o => `
+        <button type="button" class="opcao" role="radio" aria-checked="false" data-valor="${o.valor}">
+          <span class="ic" aria-hidden="true">${o.ic || ''}</span>
+          <span>${o.valor}</span>
+          <span class="marca" aria-hidden="true"></span>
+        </button>`).join('') +
+      `</div>`;
+  } else {
+    const chips = p.sugestoes ? `<div class="sugestoes">` +
+      p.sugestoes.map(s => `<button type="button" class="chip" data-chip="${s}">${s}</button>`).join('') +
+      `</div>` : '';
+    campos = `<div class="campos">
+        <input type="text" inputmode="text" autocomplete="off" placeholder="${p.placeholder||''}" data-input aria-label="${p.titulo}" />
+        ${chips}
+      </div>`;
+  }
+
+  step.innerHTML = `
+    <div class="passo-num">Pergunta ${i+1} de ${CONFIG.perguntas.length}</div>
+    <div class="pergunta">${p.titulo}</div>
+    ${p.ajuda ? `<div class="ajuda">${p.ajuda}</div>` : ''}
+    ${campos}
+    <div class="erro" data-erro>Por favor, responda para continuar.</div>
+    <div class="nav">
+      <button type="button" class="btn btn-voltar" data-voltar ${i===0?'hidden':''}>← Voltar</button>
+      <button type="button" class="btn btn-primario" data-avancar>
+        ${i === CONFIG.perguntas.length-1 ? 'Gerar minha mensagem' : 'Continuar'} →
+      </button>
+    </div>`;
+  form.appendChild(step);
+
+  // eventos das opções (escolha)
+  if (p.tipo === 'escolha') {
+    step.querySelectorAll('.opcao').forEach(op => {
+      op.addEventListener('click', () => {
+        step.querySelectorAll('.opcao').forEach(x => x.setAttribute('aria-checked','false'));
+        op.setAttribute('aria-checked','true');
+        respostas[p.id] = op.dataset.valor;
+        esconderErro(step);
+        setTimeout(() => avancar(), 180); // avança sozinho ao escolher
+      });
+    });
+  } else {
+    const input = step.querySelector('[data-input]');
+    input.addEventListener('input', () => { respostas[p.id] = input.value.trim(); esconderErro(step); });
+    input.addEventListener('keydown', e => { if (e.key === 'Enter'){ e.preventDefault(); avancar(); } });
+    step.querySelectorAll('.chip').forEach(c => {
+      c.addEventListener('click', () => { input.value = c.dataset.chip; respostas[p.id] = c.dataset.chip; esconderErro(step); input.focus(); });
+    });
+  }
+
+  step.querySelector('[data-avancar]').addEventListener('click', avancar);
+  const btnVoltar = step.querySelector('[data-voltar]');
+  if (btnVoltar) btnVoltar.addEventListener('click', voltar);
+});
+
+function esconderErro(step){ step.querySelector('[data-erro]').classList.remove('ver'); }
+
+function validar(){
+  const p = CONFIG.perguntas[atual];
+  const val = (respostas[p.id] || '').trim();
+  return !(p.obrigatorio && !val);
+}
+
+function mostrarEtapa(i){
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('ativo'));
+  if (i < CONFIG.perguntas.length){
+    form.children[i].classList.add('ativo');
+    const inp = form.children[i].querySelector('[data-input]');
+    if (inp) setTimeout(() => inp.focus({preventScroll:true}), 60);
+  } else {
+    telaFinal.classList.add('ativo');
+  }
+  const total = CONFIG.perguntas.length;
+  barra.style.width = Math.round((Math.min(i,total)/total)*100) + '%';
+}
+
+function avancar(){
+  const step = form.children[atual];
+  if (!validar()){ step.querySelector('[data-erro]').classList.add('ver'); return; }
+  atual++;
+  if (atual >= CONFIG.perguntas.length){ finalizar(); }
+  else { mostrarEtapa(atual); }
+}
+
+function voltar(){
+  if (atual > 0){ atual--; mostrarEtapa(atual); }
+}
+
+function finalizar(){
+  const msg = CONFIG.montarMensagem(respostas);
+  document.getElementById('preview').textContent = msg;
+
+  const numero = (CONFIG.numeroWhatsApp || '').replace(/\D/g,'');
+  const link = document.getElementById('botao-wpp');
+  if (numero){
+    link.href = `https://wa.me/${numero}?text=${encodeURIComponent(msg)}`;
+    document.getElementById('aviso-config').classList.remove('ver');
+  } else {
+    // sem número configurado: abre o WhatsApp com o texto pronto pra escolher o contato
+    link.href = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+    document.getElementById('aviso-config').classList.add('ver');
+  }
+  mostrarEtapa(CONFIG.perguntas.length);
+}
+
+document.getElementById('refazer').addEventListener('click', () => {
+  Object.keys(respostas).forEach(k => delete respostas[k]);
+  form.querySelectorAll('.opcao').forEach(o => o.setAttribute('aria-checked','false'));
+  form.querySelectorAll('[data-input]').forEach(i => i.value = '');
+  telaFinal.classList.remove('ativo');
+  atual = 0; mostrarEtapa(0);
+});
+
+// início
+mostrarEtapa(0);
+</script>
+</body>
+</html>
